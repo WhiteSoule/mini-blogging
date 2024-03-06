@@ -16,7 +16,7 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  isUserAuthenticated: boolean=true;//toDo: link to service to get userStatus
+  isUserAuthenticated: boolean=false;//toDo: link to service to get userStatus
 
 
   protected readonly routes = routes;
