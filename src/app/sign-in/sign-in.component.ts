@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { catchError } from 'rxjs';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -19,7 +20,7 @@ import { catchError } from 'rxjs';
 export class SignInComponent {
   apiUrl = 'https://api.realworld.io/api'
 
-  constructor(private http:HttpClient){}
+  constructor(private http:HttpClient,private authService:AuthenticationService){}
 
   signinForm = new FormGroup({
     password : new FormControl<string>('',Validators.required),
@@ -29,20 +30,7 @@ export class SignInComponent {
   WrongCredentials = false
 
   onSubmit(){
-    const body = {
-      'headers': {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "user": {
-          "email": this.getEmail,
-          "password": this.getPassword
-        }
-      })
-    };
-    this.http.get(this.apiUrl+'/users/login',body).subscribe(
-      data => console.warn(data)
-    )
+    this.authService.loginUser(this.getEmail,this.getPassword)
   }
 
   get getPassword(){return this.signinForm.get('password')?.getRawValue()}
