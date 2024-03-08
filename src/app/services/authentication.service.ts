@@ -1,18 +1,8 @@
-import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, timestamp } from 'rxjs';
-
-interface User{
-  email:string,
-  token:string,
-  username:string,
-  bio:string,
-  image:string
-}
-interface AuthResp extends Object{
-  user:User
-}
+import { Observable, catchError } from 'rxjs';
+import {User} from "../interfaces/userInterface";
+import {TokenService} from "./token.service";
 
 @Injectable({
   providedIn: 'root'
@@ -21,18 +11,26 @@ interface AuthResp extends Object{
 export class AuthenticationService {
   apiUrl = 'https://api.realworld.io/api'
 
-  constructor(private http : HttpClient) { }
+  constructor(
+    private http : HttpClient,
+    private tokenService :TokenService
+  ) { }
 
-  loginUser(email:string, password:string):Observable<User> {//todo: typeSafe with Userinterface
+  loginUser(email:string, password:string):void {//todo: typeSafe with Userinterface
     const body = {
         "user": {
           "email": email,
           "password": password
         }
     };
-    return this.http.post<User>(this.apiUrl+'/users/login',body).pipe(
-      catchError(this.handleError('login',body))
-    );
+    this.http.post<User>(this.apiUrl+'/users/login',body)
+      .pipe(
+        catchError(this.handleError('login',body))
+      )
+      .subscribe({
+        next: value => this.tokenService.saveToken(value.token),
+        error: error => console.log(error)
+      });
   }
   handleError(arg0: string, body: { user: { email: string; password: string; }; }): (err: any, caught: Observable<User>) => import("rxjs").ObservableInput<any> {
     throw new Error('Method not implemented.');
