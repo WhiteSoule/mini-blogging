@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {NgClass, NgIf} from "@angular/common";
 import {routes} from "../app.routes";
 import {RouterLink, RouterLinkActive} from "@angular/router";
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,8 +17,12 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  isUserAuthenticated: boolean=false;//toDo: link to service to get userStatus
 
+  constructor(
+    private authService:AuthenticationService
+  ){}
+
+  isUserAuthenticated: boolean = this.authService.isLogged();
 
   protected readonly routes = routes;
 }

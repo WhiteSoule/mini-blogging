@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
-import {User} from "../interfaces/userInterface";
+import { Observable } from 'rxjs';
+import {AuthResponse, LoginParameters, RegistrationParameters, User} from "../interfaces/userInterface";
 import {TokenService} from "./token.service";
+import { Route, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -13,45 +15,58 @@ export class AuthenticationService {
 
   constructor(
     private http : HttpClient,
-    private tokenService :TokenService
+    private tokenService :TokenService,
+    private router: Router,
+    private toaster: ToastrService
   ) { }
 
-  loginUser(email:string, password:string):void {//todo: typeSafe with Userinterface
+  loginUser(params:LoginParameters):void {
     const body = {
         "user": {
-          "email": email,
-          "password": password
+          "email": params.email,
+          "password": params.password
         }
     };
-    this.http.post<User>(this.apiUrl+'/users/login',body)
-      .pipe(
-        catchError(this.handleError('login',body))
-      )
+    this.http.post<AuthResponse>(this.apiUrl+'/users/login',body)
       .subscribe({
-        next: value => this.tokenService.saveToken(value.token),
-        error: error => console.log(error)
+        next: value => {
+          this.tokenService.saveToken(value.user.token);
+          this.router.navigate(['']);
+          this.toaster.success('You are logged in','Toastr fun!')
+        },
+        error: error => this.handleError(error)
       });
   }
-  handleError(arg0: string, body: { user: { email: string; password: string; }; }): (err: any, caught: Observable<User>) => import("rxjs").ObservableInput<any> {
-    throw new Error('Method not implemented.');
+
+  logout(){
+    localStorage.removeItem('token')
+    this.router.navigate([''])
+  }
+  
+  handleError(error: string){
+    throw new Error(error);
   }
 
-  setSession(authResult: any) {
-    localStorage.setItem('id_token', authResult.user.token);
+  public isLogged(){
+    return !! localStorage.getItem('token');
   }
 
-  public isLoggedIn(){
-    return
-  }
-
-  registerUser(userName:string, email:string, password:string) :Observable<any> {//todo: typeSafe with Userinterface
+  registerUser(params:RegistrationParameters) :void {//todo: typeSafe with Userinterface
     const body={
       "user": {
-        "username": userName,
-        "email": email,
-        "password": password
+        "username": params.username,
+        "email": params.email,
+        "password": params.password
       }
     }
-    return this.http.post(this.apiUrl+'/users',body)
+    this.http.post<AuthResponse>(this.apiUrl+'/users',body)
+    .subscribe({
+      next: value => {
+        this.tokenService.saveToken(value.user.token);
+        this.router.navigate(['']);
+        this.toaster.success('You are registered','Toastr fun!')
+      },
+      error: error => console.log(error)
+    })
   }
 }

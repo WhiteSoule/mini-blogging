@@ -1,9 +1,7 @@
 import { NgIf } from '@angular/common';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { catchError } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
@@ -19,21 +17,19 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class SignInComponent {
   apiUrl = 'https://api.realworld.io/api'
+  WrongCredentials: boolean = false;
 
-  constructor(private http:HttpClient,private authService:AuthenticationService){}
+  constructor(
+    private authService:AuthenticationService,
+  ){}
 
   signinForm = new FormGroup({
-    password : new FormControl<string>('',Validators.required),
-    email: new FormControl<string>('',Validators.required)
+    email : new FormControl<string>('',{nonNullable:true,validators:Validators.required}),
+    password: new FormControl<string>('',{nonNullable:true,validators:Validators.required})
   })
 
-  WrongCredentials = false
-
   onSubmit(){
-    this.authService.loginUser(this.getEmail,this.getPassword)
+    this.authService.loginUser(this.signinForm.getRawValue())
   }
-
-  get getPassword(){return this.signinForm.get('password')?.getRawValue()}
-  get getEmail(){return this.signinForm.get('email')?.getRawValue()}
   
 }

@@ -7,6 +7,7 @@ import {
   Validators
 } from "@angular/forms";
 import {RouterLink} from "@angular/router";
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -20,15 +21,17 @@ import {RouterLink} from "@angular/router";
   styleUrl: './sign-up.component.css'
 })
 export class SignUpComponent {
+  constructor(
+    private authService:AuthenticationService
+  ){}
   signupControl = new FormGroup({
-    userName: new FormControl<string>('',Validators.required),
-    password : new FormControl<string>('',Validators.required),
-    email: new FormControl<string>('',Validators.required)
+    username: new FormControl<string>('',{nonNullable: true,validators:Validators.required}),
+    password : new FormControl<string>('',{nonNullable: true,validators:Validators.required}),
+    email: new FormControl<string>('',{nonNullable: true,validators:Validators.required})
   })
   emailExists: boolean=false;
 
   onSubmit() {
-    console.warn((this.signupControl.value))
-    //toDo: Here do API calls and change emailExists in case of failure.
+    this.authService.registerUser(this.signupControl.getRawValue())
   }
 }
