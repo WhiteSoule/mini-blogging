@@ -4,6 +4,7 @@ import {AppComponent} from "./app.component";
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -21,5 +22,9 @@ export const routes: Routes = [
   {
     path:'settings',
     component: SettingsComponent
+  },
+  {
+    path:'profile',
+    component: ProfileComponent
   },
 ];
