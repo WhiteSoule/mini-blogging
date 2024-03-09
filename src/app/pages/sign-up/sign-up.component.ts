@@ -7,7 +7,7 @@ import {
   Validators
 } from "@angular/forms";
 import {RouterLink} from "@angular/router";
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,7 +27,7 @@ export class SignUpComponent {
   signupControl = new FormGroup({
     username: new FormControl<string>('',{nonNullable: true,validators:Validators.required}),
     password : new FormControl<string>('',{nonNullable: true,validators:Validators.required}),
-    email: new FormControl<string>('',{nonNullable: true,validators:Validators.required})
+    email: new FormControl<string>('',{nonNullable: true,validators:[Validators.required,Validators.email]})
   })
   emailExists: boolean=false;
 

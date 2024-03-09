@@ -2,7 +2,7 @@ import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -24,7 +24,7 @@ export class SignInComponent {
   ){}
 
   signinForm = new FormGroup({
-    email : new FormControl<string>('',{nonNullable:true,validators:Validators.required}),
+    email : new FormControl<string>('',{nonNullable:true,validators:[Validators.required,Validators.email]}),
     password: new FormControl<string>('',{nonNullable:true,validators:Validators.required})
   })
 

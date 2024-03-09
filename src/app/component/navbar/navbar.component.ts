@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NgClass, NgIf} from "@angular/common";
-import {routes} from "../app.routes";
+import {routes} from "../../app.routes";
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-navbar',
