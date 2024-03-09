@@ -1,5 +1,5 @@
 import { HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Provider } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { TokenService } from '../services/token.service';
 
@@ -18,7 +18,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     if(token != null){
       let clone = request.clone({
-        headers:request.headers.set('Authorization',token)
+        headers:request.headers.set('Authorization','Token ' + token)
       })
       return next.handle(clone).pipe(
         catchError(error => {
@@ -34,7 +34,7 @@ export class TokenInterceptor implements HttpInterceptor {
   
 };
 
-export const TokenInterceptorProvider ={
+export const TokenInterceptorProvider :Provider={
   provide:HTTP_INTERCEPTORS,
   useClass: TokenInterceptor,
   multi:true

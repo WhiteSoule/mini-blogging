@@ -1,9 +1,17 @@
-export interface User{
+export interface UserResponse{
   email:string,
   token:string,
   username:string,
   bio:string,
   image:string
+}
+
+export interface UserUpdate{
+  email?:string|null,
+  username?:string|null,
+  password?:string|null,
+  bio?:string|null,
+  image?:string|null
 }
 
 export interface RegistrationParameters{
@@ -18,5 +26,5 @@ export interface LoginParameters{
 }
 
 export interface AuthResponse{
-  user :User
+  user :UserResponse
 }

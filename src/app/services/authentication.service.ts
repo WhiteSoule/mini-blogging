@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {AuthResponse, LoginParameters, RegistrationParameters, User} from "../interfaces/userInterface";
+import {AuthResponse, LoginParameters, RegistrationParameters, UserUpdate} from "../interfaces/userInterface";
 import {TokenService} from "./token.service";
 import { Route, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -83,9 +83,24 @@ export class AuthenticationService {
       next: value => {
         this.tokenService.saveToken(value.user.token);
         this.router.navigate(['']);
-        this.toaster.success('You are registered','Toastr fun!')
+        this.toaster.success('You are registered','Welcome '+value.user.username)
       },
       error: error => this.handleError(error.error.errors)
+    })
+  }
+
+  getUser():Observable<AuthResponse>{
+    return this.http.get<AuthResponse>(this.apiUrl+'/user')
+  }
+
+  updateUser(params:UserUpdate):void{
+    const body={
+      "user": params
+    }
+    this.http.put(this.apiUrl+'/user',body).subscribe({
+      next: value => {
+        this.toaster.success('Your profile has been updated', 'Update Success')
+      },
     })
   }
 }
