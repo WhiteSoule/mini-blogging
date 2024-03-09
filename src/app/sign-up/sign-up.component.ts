@@ -31,6 +31,9 @@ export class SignUpComponent {
   })
   emailExists: boolean=false;
 
+  /**
+   * send the user input and tries to create new user
+   */
   onSubmit() {
     this.authService.registerUser(this.signupControl.getRawValue())
   }

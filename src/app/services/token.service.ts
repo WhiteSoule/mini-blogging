@@ -10,4 +10,8 @@ export class TokenService {
   saveToken(token:string):void{
     localStorage.setItem('token',token);
   }
+
+  removeToken(){
+    localStorage.removeItem('token');
+  }
 }

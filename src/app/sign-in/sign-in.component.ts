@@ -28,6 +28,9 @@ export class SignInComponent {
     password: new FormControl<string>('',{nonNullable:true,validators:Validators.required})
   })
 
+  /**
+   * sends the user input to back to try to log in
+   */
   onSubmit(){
     this.authService.loginUser(this.signinForm.getRawValue())
   }

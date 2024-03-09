@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {NgClass, NgIf} from "@angular/common";
 import {routes} from "../app.routes";
-import {RouterLink, RouterLinkActive} from "@angular/router";
+import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
@@ -16,13 +16,19 @@ import { AuthenticationService } from '../services/authentication.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent {
-
+export class NavbarComponent implements OnInit {
+  isUserAuthenticated: boolean = false;
+  
   constructor(
+    private router: Router,
     private authService:AuthenticationService
   ){}
 
-  isUserAuthenticated: boolean = this.authService.isLogged();
+  ngOnInit(): void {
+    this.router.events.subscribe(()=>{
+      this.isUserAuthenticated = this.authService.isLogged();
+    })  
+  }
 
   protected readonly routes = routes;
 }

@@ -20,6 +20,10 @@ export class AuthenticationService {
     private toaster: ToastrService
   ) { }
 
+  /**
+   * loges the user in and navigates to the home page
+   * @param params login parameters
+   */
   loginUser(params:LoginParameters):void {
     const body = {
         "user": {
@@ -32,26 +36,42 @@ export class AuthenticationService {
         next: value => {
           this.tokenService.saveToken(value.user.token);
           this.router.navigate(['']);
-          this.toaster.success('You are logged in','Toastr fun!')
+          this.toaster.success('You are logged in','Welcom '+value.user.username)
         },
-        error: error => this.handleError(error)
+        error: error => this.handleError(JSON.stringify(error.error.errors))
       });
   }
 
+  /**
+   * loges out the use by removing the token from local storage
+   */
   logout(){
-    localStorage.removeItem('token')
+    this.tokenService.removeToken()
     this.router.navigate([''])
   }
   
+  /**
+   * handel the case when error is sent from api call
+   * @param error 
+   */
   handleError(error: string){
+    this.toaster.error(error)
     throw new Error(error);
   }
 
+  /**
+   * checks if the token is present in the local storage
+   * @returns true if the user is logged in
+   */
   public isLogged(){
     return !! localStorage.getItem('token');
   }
 
-  registerUser(params:RegistrationParameters) :void {//todo: typeSafe with Userinterface
+  /**
+   * creates a new user and loges the user in
+   * @param params register parameters
+   */
+  registerUser(params:RegistrationParameters) :void {
     const body={
       "user": {
         "username": params.username,
@@ -66,7 +86,7 @@ export class AuthenticationService {
         this.router.navigate(['']);
         this.toaster.success('You are registered','Toastr fun!')
       },
-      error: error => console.log(error)
+      error: error => this.handleError(error.error.errors)
     })
   }
 }
