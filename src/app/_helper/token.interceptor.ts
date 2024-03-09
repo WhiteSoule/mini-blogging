@@ -1,6 +1,6 @@
 import { HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { TokenService } from '../services/token.service';
 
 /**
@@ -20,10 +20,18 @@ export class TokenInterceptor implements HttpInterceptor {
       let clone = request.clone({
         headers:request.headers.set('Authorization',token)
       })
-      return next.handle(clone)
+      return next.handle(clone).pipe(
+        catchError(error => {
+          if(error.status === 401){
+            this.tokenService.removeExpiredToken()
+          }
+          throw new Error('Session expired')
+        })
+      )
     }
     return next.handle(request)
   }
+  
 };
 
 export const TokenInterceptorProvider ={

@@ -43,11 +43,10 @@ export class AuthenticationService {
   }
 
   /**
-   * loges out the use by removing the token from local storage
+   * loges out the user by removing the token from local storage
    */
   logout(){
     this.tokenService.removeToken()
-    this.router.navigate([''])
   }
   
   /**
