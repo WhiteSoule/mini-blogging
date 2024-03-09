@@ -7,7 +7,6 @@ import { TokenInterceptorProvider } from './_helper/token.interceptor';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, NavbarComponent],
-  providers:[TokenInterceptorProvider],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
