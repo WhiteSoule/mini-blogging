@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
-import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [],
+  imports: [
+    NgIf,
+    ReactiveFormsModule
+  ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css'
 })
@@ -25,7 +29,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getUser().subscribe(
       data => {
-        this.updateUserForm.setValue({
+        this.updateUserForm.patchValue({
           bio: data.user.bio,
           email: data.user.email,
           image: data.user.image,

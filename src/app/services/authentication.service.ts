@@ -90,11 +90,14 @@ export class AuthenticationService {
   }
 
   getUser():Observable<AuthResponse>{
-    return this.http.get<AuthResponse>(this.apiUrl+'user')
+    return this.http.get<AuthResponse>(this.apiUrl+'/user')
   }
 
   updateUser(params:UserUpdate):void{
-    this.http.put(this.apiUrl+'user',params).subscribe({
+    const body={
+      "user": params
+    }
+    this.http.put(this.apiUrl+'/user',body).subscribe({
       next: value => {
         this.toaster.success('Your profile has been updated', 'Update Success')
       },
