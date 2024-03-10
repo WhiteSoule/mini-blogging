@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Article } from '../../interfaces/article';
 import { CommonModule, NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ArticleService } from '../../services/article.service';
 
 @Component({
   selector: 'app-article',
@@ -17,11 +18,19 @@ import { RouterLink } from '@angular/router';
 export class ArticleComponent {
   @Input() article:Article|undefined;
 
+  constructor(
+    private articleService:ArticleService
+  ){}
+
   favorite(){
-    
-  }
-
-  unFavorite(){
-
+    if(this.article){
+      if(this.article.favorited){
+        this.articleService.favoriteArticle(this.article.slug)
+        .subscribe()
+      }else{
+        this.articleService.unFavoriteArticle(this.article.slug)
+        .subscribe()
+      }
+    }
   }
 }

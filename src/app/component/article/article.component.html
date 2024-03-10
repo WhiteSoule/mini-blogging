@@ -5,7 +5,7 @@
         <a [routerLink]="['/profile/{{article.author.username}}']" class="author">{{article?.author?.username}}</a>
         <span class="date">{{article?.createdAt}}</span>
       </div>
-      <button class="btn btn-outline-primary btn-sm pull-xs-right">
+      <button [ngClass]="{'btn-outline-primary':!article?.favorited,'btn-primary':article?.favorited}" class="btn btn-sm pull-xs-right">
         <i class="ion-heart"></i> {{article?.favoritesCount}}
       </button>
     </div>
