@@ -3,17 +3,20 @@
       <div class="container">
         <div class="row">
           <div class="col-xs-12 col-md-10 offset-md-1">
-            <img src="http://i.imgur.com/Qr71crq.jpg" class="user-img" />
-            <h4>Eric Simons</h4>
+            <img src={{profile?.image}} class="user-img" />
+            <h4>{{profile.username}}</h4>
             <p>
-              Cofounder &#64;GoThinkster, lived in Aol's HQ for a few months, kinda looks like Peeta from
-              the Hunger Games
+              {{profile.bio}}
             </p>
-            <button class="btn btn-sm btn-outline-secondary action-btn">
+            <button *ngIf="!isFollowing" class="btn btn-sm btn-outline-secondary action-btn" (click)="followUser()">
               <i class="ion-plus-round"></i>
-              &nbsp; Follow Eric Simons
+              &nbsp; Follow {{profile.username}}
             </button>
-            <button class="btn btn-sm btn-outline-secondary action-btn">
+            <button *ngIf="isFollowing" class="btn btn-sm btn-outline-secondary action-btn" (click)="unfollowUser()">
+              <i class="ion-minus-round"></i>
+              &nbsp; Unfollow {{profile.username}}
+            </button>
+            <button *ngIf="isCurrentUser()" (click)="navigateToSettings()" class="btn btn-sm btn-outline-secondary action-btn">
               <i class="ion-gear-a"></i>
               &nbsp; Edit Profile Settings
             </button>
