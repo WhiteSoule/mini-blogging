@@ -18,6 +18,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 export class NavbarComponent implements OnInit {
   isUserAuthenticated: boolean = false;
+  currentUserUsername: string = ''
   
   constructor(
     private router: Router,
@@ -27,7 +28,10 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe(()=>{
       this.isUserAuthenticated = this.authService.isLogged();
-    })  
+    })
+    this.authService.getUser().subscribe({
+      next: value => this.currentUserUsername = value.user.username
+    }) 
   }
 
   protected readonly routes = routes;
