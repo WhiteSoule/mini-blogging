@@ -17,4 +17,11 @@ import { RouterLink } from '@angular/router';
 export class ArticleComponent {
   @Input() article:Article|undefined;
 
+  favorite(){
+    
+  }
+
+  unFavorite(){
+
+  }
 }
