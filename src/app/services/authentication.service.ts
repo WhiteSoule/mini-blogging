@@ -26,10 +26,7 @@ export class AuthenticationService {
    */
   loginUser(params:LoginParameters):void {
     const body = {
-        "user": {
-          "email": params.email,
-          "password": params.password
-        }
+        "user": {...params}
     };
     this.http.post<AuthResponse>(this.apiUrl+'/users/login',body)
       .subscribe({
@@ -72,11 +69,7 @@ export class AuthenticationService {
    */
   registerUser(params:RegistrationParameters) :void {
     const body={
-      "user": {
-        "username": params.username,
-        "email": params.email,
-        "password": params.password
-      }
+      "user": {...params}
     }
     this.http.post<AuthResponse>(this.apiUrl+'/users',body)
     .subscribe({
