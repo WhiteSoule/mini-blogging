@@ -13,6 +13,13 @@ export interface Article {
     author:User
 }
 
+export interface ArticleFilter{
+    tag?:string,
+    author?:string,
+    favorited?:string,
+    offset?:number,
+    limit?:number
+}
 export interface NewArticle extends UpdateArticle{
     tagList: string[]
 }

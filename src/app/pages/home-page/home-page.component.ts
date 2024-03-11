@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
-import { Article } from '../../interfaces/article';
+import { Article, ArticleFilter } from '../../interfaces/article';
 import { ArticleComponent } from '../../component/article/article.component';
 import { NgFor } from '@angular/common';
 
@@ -17,13 +17,14 @@ import { NgFor } from '@angular/common';
 })
 export class HomePageComponent {
   articles:Article[]=[]
+  filter:ArticleFilter={}
   constructor(
     private router:Router,
     private articleService:ArticleService
   ){}
 
   ngOnInit(){
-    this.articleService.getArticles().subscribe({
+    this.articleService.getArticles(this.filter).subscribe({
       next: value=>{
         this.articles = value.articles
       }

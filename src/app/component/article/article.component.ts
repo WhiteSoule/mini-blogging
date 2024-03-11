@@ -18,7 +18,23 @@ import { ArticleService } from '../../services/article.service';
   styleUrl: './article.component.css'
 })
 export class ArticleComponent {
-  @Input() article:Article|undefined;
+  @Input() article:Article={
+    author:{
+      bio:'',
+      following:false,
+      image:'',
+      username:''
+    },
+    body:'',
+    createdAt:'',
+    description:'',
+    favorited:false,
+    favoritesCount:0,
+    slug:'',
+    tagList:[],
+    title:'',
+    updatedAt:''
+  };
 
   constructor(
     private articleService:ArticleService
@@ -26,12 +42,16 @@ export class ArticleComponent {
 
   favorite(){
     if(this.article){
-      if(this.article.favorited){
+      if(!this.article.favorited){
         this.articleService.favoriteArticle(this.article.slug)
-        .subscribe()
+        .subscribe({
+          next:(value)=>this.article=value.article
+        })
       }else{
         this.articleService.unFavoriteArticle(this.article.slug)
-        .subscribe()
+        .subscribe({
+          next:(value)=>this.article=value.article
+        })
       }
     }
   }

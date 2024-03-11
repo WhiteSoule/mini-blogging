@@ -1,18 +1,18 @@
 <div class="article-preview">
     <div class="article-meta">
-      <a [routerLink]="['/profile',article?.author?.username]" routerLinkActive="router-link-active" ><img
-        ngSrc="{{article?.author?.image}}" fill/></a>
+      <a [routerLink]="['/profile',article.author.username]" routerLinkActive="router-link-active" ><img
+        [src]="article.author.image"/></a>
       <div class="info">
-        <a [routerLink]="['/profile',article?.author?.username]" class="author">{{article?.author?.username}}</a>
-        <span class="date">{{article?.createdAt}}</span>
+        <a [routerLink]="['/profile',article.author.username]" class="author">{{article.author.username}}</a>
+        <span class="date">{{article.createdAt}}</span>
       </div>
-      <button [ngClass]="{'btn-outline-primary':!article?.favorited,'btn-primary':article?.favorited}" class="btn btn-sm pull-xs-right">
-        <i class="ion-heart"></i> {{article?.favoritesCount}}
+      <button [ngClass]="{'btn-outline-primary':!article.favorited,'btn-primary':article.favorited}" class="btn btn-sm pull-xs-right" (click)="favorite()">
+        <i class="ion-heart"></i> {{article.favoritesCount}}
       </button>
     </div>
-    <a [routerLink]="['/article',article?.slug]" class="preview-link">
-      <h1>{{article?.title}}</h1>
-      <p>{{article?.description}}</p>
+    <a [routerLink]="['/article',article.slug]" class="preview-link">
+      <h1>{{article.title}}</h1>
+      <p>{{article.description}}</p>
       <span>Read more...</span>
       <ul class="tag-list">
         <li class="tag-default tag-pill tag-outline" *ngFor="let tag of article?.tagList">{{tag}}</li>
