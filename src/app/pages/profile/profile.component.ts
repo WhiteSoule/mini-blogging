@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, inject} from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ProfileService } from '../../services/profile.service';
 import { Profile } from '../../interfaces/profile';
@@ -17,7 +17,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit{
 
-  
+  username :string =''
   profile :Profile={
     bio:'',
     following:false,
@@ -30,19 +30,20 @@ export class ProfileComponent implements OnInit{
   constructor(
     private profileService : ProfileService,
     private authService: AuthenticationService,
-    private route:ActivatedRoute,
+    private route: ActivatedRoute,
     private router: Router
-  ){}
+  ){
+    this.username = this.route.snapshot.params['username']
+  }
 
-  
+
   ngOnInit(){
-    const username = this.route.snapshot.paramMap.get('username')!;
-    this.profileService.getProfile(username)
+    this.profileService.getProfile(this.username)
     .subscribe({
       next: value => this.profile = value.profile
     })
     this.authService.getUser().subscribe({
-      next: value => { 
+      next: value => {
         this.currentUser = value.user
       }
     })
@@ -51,7 +52,7 @@ export class ProfileComponent implements OnInit{
   isCurrentUser(): boolean {
     return this.profile.username === this.currentUser?.username
   }
-  
+
   navigateToSettings() {
     this.router.navigate(['/settings'])
   }
@@ -63,6 +64,6 @@ export class ProfileComponent implements OnInit{
 
   unfollowUser(){
     this.profileService.unFollowUser(this.profile.username)
-    this.isFollowing = false 
+    this.isFollowing = false
   }
 }

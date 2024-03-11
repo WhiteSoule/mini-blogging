@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Article } from '../../interfaces/article';
-import { CommonModule, NgFor } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import {CommonModule, NgFor, NgOptimizedImage} from '@angular/common';
+import {RouterLink, RouterLinkActive} from '@angular/router';
 import { ArticleService } from '../../services/article.service';
 
 @Component({
@@ -10,7 +10,9 @@ import { ArticleService } from '../../services/article.service';
   imports: [
     CommonModule,
     RouterLink,
-    NgFor
+    NgFor,
+    NgOptimizedImage,
+    RouterLinkActive
   ],
   templateUrl: './article.component.html',
   styleUrl: './article.component.css'
