@@ -29,7 +29,12 @@ export const routes: Routes = [
     component: ProfileComponent
   },
   {
+    path:'editor',
+    component:EditorComponent
+  },
+  {
     path:'editor/:articleSlug',
     component:EditorComponent
-  }
+  },
+  
 ];

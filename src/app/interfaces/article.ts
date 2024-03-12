@@ -21,13 +21,13 @@ export interface ArticleFilter{
     limit?:number
 }
 export interface NewArticle extends UpdateArticle{
-    tagList: string[]
+    tagList?: string[]|null
 }
 
 export interface UpdateArticle{
     title: string,
-    description: string,
-    body: string
+    description?: string|null,
+    body?: string|null
 }
 
 
