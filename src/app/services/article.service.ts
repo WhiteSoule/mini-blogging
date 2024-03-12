@@ -27,8 +27,8 @@ export class ArticleService {
     return this.http.delete<ArticleResponse>(`${this.articlesUrl}/${articleSlug}/favorite`)
   }
 
-  getArticle(articleSlug: string){
-    return this.http.get(`${this.articlesUrl}/${articleSlug}`)
+  getArticle(articleSlug: string):Observable<ArticleResponse>{
+    return this.http.get<ArticleResponse>(`${this.articlesUrl}/${articleSlug}`)
   }
 
   getArticles(filters:ArticleFilter):Observable<ArticlesResponse>{

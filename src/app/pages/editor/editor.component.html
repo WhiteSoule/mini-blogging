@@ -1,0 +1,46 @@
+<div class="editor-page">
+    <div class="container page">
+      <div class="row">
+        <div class="col-md-10 offset-md-1 col-xs-12">
+          <ul class="error-messages" *ngIf="articleForm.invalid && articleForm.dirty">
+            <li>That title is required</li>
+          </ul>
+  
+          <form [formGroup]="articleForm">
+            <fieldset>
+              <fieldset class="form-group">
+                <input type="text" class="form-control form-control-lg" placeholder="Article Title" formControlName="title"/>
+              </fieldset>
+              <fieldset class="form-group">
+                <input type="text" class="form-control" placeholder="What's this article about?" formControlName="description"/>
+              </fieldset>
+              <fieldset class="form-group">
+                <textarea
+                  class="form-control"
+                  rows="8"
+                  placeholder="Write your article (in markdown)"
+                  formControlName="body"
+                ></textarea>
+              </fieldset>
+              <fieldset class="form-group">
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  placeholder="Enter tags" 
+                  (keyup.enter)="addTagToList()" 
+                  (blur)="addTagToList()" 
+                  [formControl]="newTag"
+                />
+                <div class="tag-list">
+                  <span class="tag-default tag-pill" *ngFor="let tag of tagList"> <i class="ion-close-round" (click)="removeTag(tag)"></i>{{tag}}</span>
+                </div>
+              </fieldset>
+              <button class="btn btn-lg pull-xs-right btn-primary" type="button" (click)="createArticle()" [disabled]="articleForm.invalid">
+                Publish Article
+              </button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
