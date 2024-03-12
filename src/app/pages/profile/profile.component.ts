@@ -5,16 +5,18 @@ import { Profile } from '../../interfaces/profile';
 import { CommonModule } from '@angular/common';
 import { UserResponse } from '../../interfaces/userInterface';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Article } from '../../interfaces/article';
+import { Article, ArticleFilter } from '../../interfaces/article';
 import { ArticleService } from '../../services/article.service';
 import { ArticleComponent } from '../../component/article/article.component';
+import { PaginationComponent } from '../../component/pagination/pagination.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [
     CommonModule,
-    ArticleComponent
+    ArticleComponent,
+    PaginationComponent
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
@@ -29,8 +31,10 @@ export class ProfileComponent implements OnInit{
     username:''
   }
   currentUser : UserResponse|undefined
-  isFollowing=this.profile.following
   articles:Article[]=[]
+  filter:ArticleFilter={};
+  currentPage:number = 1;
+  totalArticles:number=0
 
   constructor(
     private profileService : ProfileService,
@@ -53,9 +57,15 @@ export class ProfileComponent implements OnInit{
         this.currentUser = value.user
       }
     })
-    this.articleService.getArticles({author:this.username}).subscribe({
+    this.fetchArticles()
+  }
+
+  fetchArticles(){
+    const filter = {...this.filter,author:this.username}
+    this.articleService.getArticles(filter).subscribe({
       next: value=>{
         this.articles = value.articles
+        this.totalArticles = value.articlesCount
       }
     })
   }
@@ -70,11 +80,16 @@ export class ProfileComponent implements OnInit{
 
   followUser(){
     this.profileService.followUser(this.profile.username)
-    this.isFollowing = true
   }
 
   unfollowUser(){
     this.profileService.unFollowUser(this.profile.username)
-    this.isFollowing = false
   }
+
+  onPageChange(page:number){
+    this.currentPage=page
+    this.filter ={...this.filter,offset:20*(page-1)} // *20 cause it is the default value of items per call
+    this.fetchArticles()
+  }
+
 }

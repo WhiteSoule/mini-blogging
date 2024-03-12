@@ -1,0 +1,5 @@
+<ul class="pagination">
+    <li class="page-item" [ngClass]="{'active': item+1==currentPage}" *ngFor="let i of [].constructor(totalPages); index as item">
+        <a class="page-link" (click)="changePage(item+1)">{{item+1}}</a>
+    </li>
+</ul>
