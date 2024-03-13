@@ -6,6 +6,8 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { EditorComponent } from './pages/editor/editor.component';
+import { ArticleComponent } from './component/article/article.component';
+import { ArticlePageComponent } from './pages/article-page/article-page.component';
 
 export const routes: Routes = [
   {
@@ -36,5 +38,8 @@ export const routes: Routes = [
     path:'editor/:articleSlug',
     component:EditorComponent
   },
-  
+  {
+    path:'article/:articleSlug',
+    component:ArticlePageComponent
+  }
 ];
