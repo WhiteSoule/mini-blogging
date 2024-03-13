@@ -9,6 +9,7 @@ import { Article, ArticleFilter } from '../../interfaces/article';
 import { ArticleService } from '../../services/article.service';
 import { ArticleComponent } from '../../component/article/article.component';
 import { PaginationComponent } from '../../component/pagination/pagination.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -41,7 +42,8 @@ export class ProfileComponent implements OnInit{
     private authService: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router,
-    private articleService:ArticleService
+    private articleService:ArticleService,
+    private toaster: ToastrService
   ){
     this.username = this.route.snapshot.params['username']
   }
@@ -80,10 +82,22 @@ export class ProfileComponent implements OnInit{
 
   followUser(){
     this.profileService.followUser(this.profile.username)
+    .subscribe({
+      next: value => {
+        this.profile = value.profile
+        this.toaster.success('you are following '+value.profile.username)
+      }
+    })
   }
 
   unfollowUser(){
     this.profileService.unFollowUser(this.profile.username)
+    .subscribe({
+      next: value => {
+        this.profile = value.profile
+        this.toaster.success('you are not following '+value.profile.username+' anymore')
+    }
+    })
   }
 
   onPageChange(page:number){
