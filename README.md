@@ -2,26 +2,22 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.1.
 
+## Pre- Requisits
+node version 20.11.1
+
+## Installation
+Once the repository downloaded, navigate to the project's folder.
+Once there run `npm i` to install all the dependencies for the project
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
-## Code scaffolding
+## What is this web page
+This web application is a simple web page to create and share articles with other users. 
+Articles can have comments and be marked as favorite.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Why this web page
+This project is meant to prove my skills as a front end developer. The goal being to achieve as good a result as possible in a limited time. 
+Instructions have been provided by https://realworld-docs.netlify.app/ .
+The Web page is still missing improvments which did not fit in the time frame but are described in the issues of this repository.
