@@ -1,0 +1,130 @@
+<div class="article-page">
+    <div class="banner">
+      <div class="container">
+        <h1>{{article?.title}}</h1>
+  
+        <div class="article-meta">
+          <a [routerLink]="['/profile', article?.author?.username]"
+          routerLinkActive="router-link-active"><img [src]="article?.author?.image" /></a>
+          <div class="info">
+            <a [routerLink]="['/profile', article?.author?.username]" class="author">{{article?.author?.username}}</a>
+            <span class="date">{{article?.createdAt}}</span>
+          </div>
+          <button *ngIf="!article?.author?.following" class="btn btn-sm btn-outline-secondary action-btn" (click)="followUser()">
+            <i class="ion-plus-round"></i>
+            &nbsp; Follow {{article?.author?.username}}
+          </button>
+          <button *ngIf="article?.author?.following" class="btn btn-sm btn-outline-secondary action-btn" (click)="unfollowUser()">
+            <i class="ion-minus-round"></i>
+            &nbsp; Unfollow {{article?.author?.username}}
+          </button>
+          &nbsp;&nbsp;
+          <button [ngClass]="{'btn-outline-primary':!article?.favorited,'btn-primary':article?.favorited}" class="btn btn-sm" (click)="favorite()">
+            <i class="ion-heart"></i> 
+            &nbsp; Favorite Post <span class="counter">({{article?.favoritesCount}})</span>
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" [routerLink]="['/editor', article?.slug]" *ngIf="isUserAuthor">
+            <i class="ion-edit"></i> Edit Article
+          </button>
+          <button class="btn btn-sm btn-outline-danger" *ngIf="isUserAuthor">
+            <i class="ion-trash-a"></i> Delete Article
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="container page">
+      <div class="row article-content">
+        <div class="col-md-12">
+          <p>
+            {{article?.description}}
+          </p>
+          {{article?.body}}
+          <ul class="tag-list">
+            <li class="tag-default tag-pill tag-outline" *ngFor="let tag of article?.tagList">{{tag}}</li>
+          </ul>
+        </div>
+      </div>
+  
+      <hr />
+  
+      <div class="article-actions">
+        <div class="article-meta">
+            <a [routerLink]="['/profile', article?.author?.username]"
+            routerLinkActive="router-link-active"><img [src]="article?.author?.image" /></a>
+            <div class="info">
+              <a [routerLink]="['/profile', article?.author?.username]" class="author">{{article?.author?.username}}</a>
+              <span class="date">{{article?.createdAt}}</span>
+            </div>
+            <button *ngIf="!article?.author?.following" class="btn btn-sm btn-outline-secondary action-btn" (click)="followUser()">
+              <i class="ion-plus-round"></i>
+              &nbsp; Follow {{article?.author?.username}}
+            </button>
+            <button *ngIf="article?.author?.following" class="btn btn-sm btn-outline-secondary action-btn" (click)="unfollowUser()">
+              <i class="ion-minus-round"></i>
+              &nbsp; Unfollow {{article?.author?.username}}
+            </button>
+            &nbsp;&nbsp;
+            <button [ngClass]="{'btn-outline-primary':!article?.favorited,'btn-primary':article?.favorited}" class="btn btn-sm" (click)="favorite()">
+              <i class="ion-heart"></i> 
+              &nbsp; Favorite Post <span class="counter">({{article?.favoritesCount}})</span>
+            </button>
+            <button class="btn btn-sm btn-outline-secondary" [routerLink]="['/editor', article?.slug]" *ngIf="isUserAuthor">
+              <i class="ion-edit"></i> Edit Article
+            </button>
+            <button class="btn btn-sm btn-outline-danger" *ngIf="isUserAuthor">
+              <i class="ion-trash-a"></i> Delete Article
+            </button>
+          </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-xs-12 col-md-8 offset-md-2">
+          <form class="card comment-form">
+            <div class="card-block">
+              <textarea class="form-control" placeholder="Write a comment..." rows="3"></textarea>
+            </div>
+            <div class="card-footer">
+              <img src="http://i.imgur.com/Qr71crq.jpg" class="comment-author-img" />
+              <button class="btn btn-sm btn-primary">Post Comment</button>
+            </div>
+          </form>
+  
+          <div class="card">
+            <div class="card-block">
+              <p class="card-text">
+                With supporting text below as a natural lead-in to additional content.
+              </p>
+            </div>
+            <div class="card-footer">
+              <a href="/profile/author" class="comment-author">
+                <img src="http://i.imgur.com/Qr71crq.jpg" class="comment-author-img" />
+              </a>
+              &nbsp;
+              <a href="/profile/jacob-schmidt" class="comment-author">Jacob Schmidt</a>
+              <span class="date-posted">Dec 29th</span>
+            </div>
+          </div>
+  
+          <div class="card">
+            <div class="card-block">
+              <p class="card-text">
+                With supporting text below as a natural lead-in to additional content.
+              </p>
+            </div>
+            <div class="card-footer">
+              <a href="/profile/author" class="comment-author">
+                <img src="http://i.imgur.com/Qr71crq.jpg" class="comment-author-img" />
+              </a>
+              &nbsp;
+              <a href="/profile/jacob-schmidt" class="comment-author">Jacob Schmidt</a>
+              <span class="date-posted">Dec 29th</span>
+              <span class="mod-options">
+                <i class="ion-trash-a"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

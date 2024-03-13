@@ -21,18 +21,12 @@ export class ProfileService {
     return this.http.get<ProfileResponse>(this.apiUrl+'/profiles/'+username)
   }
 
-  followUser(username:string): void{
-    this.http.post(this.apiUrl+`/profiles/${username}/follow`,{})
-    .subscribe({
-      next: value => this.toaster.success('you are following '+username)
-    })
+  followUser(username:string): Observable<ProfileResponse>{
+    return this.http.post<ProfileResponse>(this.apiUrl+`/profiles/${username}/follow`,{})
   }
 
-  unFollowUser(username:string): void{
-    this.http.delete<ProfileResponse>(this.apiUrl+`/profiles/${username}/follow`)
-    .subscribe({
-      next: value => this.toaster.success('you are not following '+username+' anymore')
-    })
+  unFollowUser(username:string): Observable<ProfileResponse>{
+    return this.http.delete<ProfileResponse>(this.apiUrl+`/profiles/${username}/follow`)
   }
 
 }
